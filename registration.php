@@ -19,24 +19,24 @@
             $errors = array();
 
             if (empty($fullName) OR empty($email) OR empty($password) OR empty($passwordRepeat)) {
-                array_push($errors, "All fields are required.")
+                array_push($errors, "All fields are required.");
             }
             
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                array_push($errors, "Email is not valid, please insert valid email.")
+                array_push($errors, "Email is not valid, please insert valid email.");
             }
 
             if(strlen($password)<8){
-                array_push($errors, "Password must be at least 8 characters long.")
+                array_push($errors, "Password must be at least 8 characters long.");
             }
 
             if ($password!==$passwordRepeat) {
-                array_push($errors, "password does not match.")
+                array_push($errors, "password does not match.");
             }
 
             if (count($errors)>0) {
                 foreach ($errors as $error){
-                    echo "<div class="alert alert-danger">$error</div>"
+                    echo "<div class='alert alert-danger'>$error</div>";
                 }
             }else{ // we will insert the data in to database
 
