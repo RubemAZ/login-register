@@ -16,6 +16,8 @@
             $password = $_POST["password"];
             $passwordRepeat = $_POST["repeat_password"];
 
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
             $errors = array();
 
             if (empty($fullName) OR empty($email) OR empty($password) OR empty($passwordRepeat)) {
@@ -39,7 +41,17 @@
                     echo "<div class='alert alert-danger'>$error</div>";
                 }
             }else{ // we will insert the data in to database
-
+                require_once "database.php";
+                $sql = "INSERT INTO users( full_name, email, password ) VALUES ( ?, ?, ? )";
+                $stmt = mysqli_stmt_init( $conn );
+                $prepareStmt = mysqli_stmt_prepare( $stmt, $sql );
+                if ($prepareStmt) {
+                    mysqli_stmt_bind_param( $stmt, "sss", $fullName, $email, $passwordHash );
+                    mysqli_stmt_execute($stmt);
+                    echo "<div class = 'alert alert-success'> You are registered successfuly. </div>";
+                } else {
+                    die("Something went wrong");
+                }
             }
         }
         ?>
